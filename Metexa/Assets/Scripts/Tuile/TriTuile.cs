@@ -15,7 +15,7 @@ namespace Tuile
         [Space]
         [SerializeField] private MeshCollider col;
         public Noeud noeud;
-        private static LayerMask maskTuile;
+        public static LayerMask maskTuile;
 
         private float _hauteur;
 
@@ -32,12 +32,12 @@ namespace Tuile
         private void Awake()
         {
             noeud = new Noeud(this);
+            if (maskTuile == 0) maskTuile = gameObject.layer;
         }
 
         private void Start()
         {
-            if (maskTuile == 0) maskTuile = gameObject.layer;
-            TrouverVoisins();
+            noeud.TrouverVoisins();            
         }
 
         private void Update()
@@ -50,32 +50,7 @@ namespace Tuile
             
         }
 
-        private void TrouverVoisins()
-        {
-            List<Noeud> noeudAdjacents = new List<Noeud>();
-            float decalageRad = transform.eulerAngles.y * Mathf.Deg2Rad;
-            float cranRad = 2 * Mathf.PI / 3;
-            
-            for (int i = 0; i < 3; i++)
-            {
-                Vector3 decalagePos = new Vector3
-                {
-                    x = Mathf.Cos(cranRad * i + decalageRad) * 0.62f,
-                    z = Mathf.Sin(cranRad * i + decalageRad) * 0.62f
-                };
-
-                Collider[] autres = Physics.OverlapBox(noeud.tuile.transform.position + decalagePos,
-                    Vector3.one * 0.01f, new Quaternion(), maskTuile);
-                
-                
-                if (autres.Length > 0 && autres[0].TryGetComponent(out TriTuile autreTuile))
-                {
-                    noeudAdjacents.Add(autreTuile.noeud);
-                }
-            }
-            
-            noeud.Voisins = noeudAdjacents.ToArray();
-        }
+        
 
         public void AppliquerHauteur(float hauteur)
         {

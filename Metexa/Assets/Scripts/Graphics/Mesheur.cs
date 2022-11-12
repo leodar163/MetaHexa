@@ -21,12 +21,18 @@ namespace Graphics
         private void Update()
         {
             if (_meshFilter)
-            {
-                if(!_meshFilter.sharedMesh) AssignerMesh();
+            {   
+                if (!_meshFilter.sharedMesh)
+                {
+                    print(name + " a assigné un mesh de TriTuile");
+                    
+                    AssignerMesh();
+                }
                 if (ReinitMesh)
                 {
-                    AssignerMesh();
+                    print(name + " a réinit son mesh");
                     ReinitMesh = false;
+                    AssignerMesh();
                 }
             }
             QuandMAJ();
@@ -35,8 +41,8 @@ namespace Graphics
         private void AssignerMesh()
         {
             _meshFilter.sharedMesh = MeshAMesher;
-            MeshAMesher.RecalculateNormals();
-            MeshAMesher.RecalculateBounds();
+            _meshFilter.sharedMesh.RecalculateNormals();
+            _meshFilter.sharedMesh.RecalculateBounds();
         }
         
         /// <summary>

@@ -17,6 +17,7 @@ namespace Graphics
 
             if (_meshRenderer && _materialAInstencier && (!_meshRenderer.sharedMaterial || _reinit))
             {
+                _reinit = false;
                 AssignerMaterialInstancied();
             }
         }

@@ -9,14 +9,12 @@ namespace Tuile.Graphics
     public class HoverTrituileSys : MonoBehaviour
     {
         [SerializeField] private bool debugVoisins;
-        private LayerMask masqueTrituile;
 
         private static TriTuile tuileHovered;
 
         // Start is called before the first frame update
         void Start()
         {
-           masqueTrituile = LayerMask.GetMask("Trituile");
         }
 
         // Update is called once per frame
@@ -31,7 +29,7 @@ namespace Tuile.Graphics
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction * 2000f, Color.green);
         
-            if (Physics.Raycast(ray, out RaycastHit hit,2000f, masqueTrituile) 
+            if (Physics.Raycast(ray, out RaycastHit hit,2000f, TriTuile.maskTuile) 
                 && hit.collider.TryGetComponent(out TriTuile triTuile))
             {
                 if (triTuile != tuileHovered)
@@ -43,8 +41,7 @@ namespace Tuile.Graphics
                         
                         if (debugVoisins)
                         {
-                            foreach (var triTuileAdj in
-                                Graphe.TrouverNoeudParTuile(tuileHovered).Voisins)
+                            foreach (var triTuileAdj in tuileHovered.noeud.Voisins)
                             {
                                 triTuileAdj.tuile.DevenirVisible(false);
                             }
@@ -56,8 +53,7 @@ namespace Tuile.Graphics
                     
                     if (debugVoisins)
                     {
-                        foreach (var triTuileAdj in
-                            Graphe.TrouverNoeudParTuile(tuileHovered).Voisins)
+                        foreach (var triTuileAdj in tuileHovered.noeud.Voisins)
                         {
                             triTuileAdj.tuile.DevenirVisible();
                         }
@@ -72,8 +68,7 @@ namespace Tuile.Graphics
 
                 if (debugVoisins)
                 {
-                    foreach (var triTuileAdj in
-                        Graphe.TrouverNoeudParTuile(tuileHovered).Voisins)
+                    foreach (var triTuileAdj in tuileHovered.noeud.Voisins)
                     {
                         triTuileAdj.tuile.DevenirVisible(false);
                     }
@@ -90,9 +85,11 @@ namespace Tuile.Graphics
             if(tuileHovered)
             {
                 if (Input.GetMouseButtonUp(0)) tuileSelectionned = tuileHovered;
-                if (Input.GetMouseButtonUp(1)) if(tuileSelectionned) 
-                    DessinerChemin(PathFinding.PathFinding.TrouverChemin(tuileSelectionned, tuileHovered));
-                //if (Input.GetMouseButtonUp(2)) tuileHovered.hauteur = 0; //deprecié
+                if (Input.GetMouseButtonUp(1))
+                    if (tuileSelectionned)
+                    {
+                        PathFinder.TrouverChemin(tuileSelectionned, tuileHovered, DessinerChemin);
+                    }
             }
         }
 
