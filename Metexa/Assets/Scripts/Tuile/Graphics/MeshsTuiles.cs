@@ -30,9 +30,11 @@ namespace Tuile.Graphics
         private static Vector3 midBasDroiteExt = Vector3.Lerp(basExt, basDroiteExt, 0.5f);
         private static Vector3 midbasGaucheExt = Vector3.Lerp(basExt, basGaucheExt, 0.5f);
 
-        public static Mesh tuileMetaHexa => new Mesh
+        public static Mesh GenererMeshTuileHexa()
         {
-            name = "Tuile de Triangles",
+            return new Mesh
+            {
+name = "Tuile de Triangles",
             vertices = new Vector3[]
             {
                 //18 vertices de l'hexa central
@@ -238,7 +240,9 @@ namespace Tuile.Graphics
                 71,72,83,
                 70,72,71
             }
-        };
+            };
+        }
+        
 
         private static int[] coordonnesTriangles =
         {
@@ -283,53 +287,55 @@ namespace Tuile.Graphics
         private static Vector3 zeroRad = new Vector3(rayon, 0, 0);
         private static Vector3 deuxRad = new Vector3(Mathf.Cos(cranRadTT) * rayon, 0f, Mathf.Sin(cranRadTT) * rayon);
         private static Vector3  unRad =  new Vector3(Mathf.Cos(cranRadTT * 2) * rayon,0,Mathf.Sin(cranRadTT * 2) * rayon);
-        
-        
-        public static readonly Mesh TriTuile = new Mesh
+
+        public static Mesh GenerateTrituileMesh()
         {
-            name = "TriTuile",
-
-            vertices = new []
+            return new Mesh
             {
-             zeroRad + hauteur,
-             unRad + hauteur,
-             deuxRad + hauteur,
+                name = "TriTuile",
 
-             zeroRad - hauteur,
-             deuxRad - hauteur,
-             unRad - hauteur,
+                vertices = new []
+                {
+                    zeroRad + hauteur,
+                    unRad + hauteur,
+                    deuxRad + hauteur,
+
+                    zeroRad - hauteur,
+                    deuxRad - hauteur,
+                    unRad - hauteur,
              
-             zeroRad + hauteur,
-             zeroRad - hauteur,
-             deuxRad + hauteur,
-             deuxRad - hauteur,
+                    zeroRad + hauteur,
+                    zeroRad - hauteur,
+                    deuxRad + hauteur,
+                    deuxRad - hauteur,
              
-             zeroRad + hauteur,
-             zeroRad - hauteur,
-             unRad + hauteur,
-             unRad - hauteur,
+                    zeroRad + hauteur,
+                    zeroRad - hauteur,
+                    unRad + hauteur,
+                    unRad - hauteur,
              
-             unRad + hauteur,
-             unRad - hauteur,
-             deuxRad + hauteur,
-             deuxRad - hauteur,
-            },
-            triangles = new []
-            {
-                0,1,2,
-                3,4,5,
+                    unRad + hauteur,
+                    unRad - hauteur,
+                    deuxRad + hauteur,
+                    deuxRad - hauteur,
+                },
+                triangles = new []
+                {
+                    0,1,2,
+                    3,4,5,
                 
-                7,6,8,
-                9,7,8,
+                    7,6,8,
+                    9,7,8,
                 
-                11,12,10,
-                11,13,12,
+                    11,12,10,
+                    11,13,12,
                 
-                15,16,14,
-                15,17,16
+                    15,16,14,
+                    15,17,16
                 
-            }
-        };
+                }
+            };
+        }
 
         #endregion
     }

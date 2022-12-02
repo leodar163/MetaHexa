@@ -1,3 +1,14 @@
-﻿fileFormatVersion: 2
+fileFormatVersion: 2
 guid: 58d17b825ede44d1b90a1b064d78a5e5
-timeCreated: 1666463440
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _meshFilter: {instanceID: 0}
+  - _tuile: {instanceID: 0}
+  - _dataMesh: {fileID: 11400000, guid: 2594a105f1adee84490f5939692309ac, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

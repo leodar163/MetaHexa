@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8199989606398095402}
   - component: {fileID: 5013703305012363483}
   - component: {fileID: 1526656204194774990}
-  - component: {fileID: 8060094190446049461}
+  - component: {fileID: 6652692515009518705}
   m_Layer: 6
   m_Name: Trituile
   m_TagString: Untagged
@@ -116,6 +116,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _meshFilter: {fileID: 4947455254267938622}
   ReinitMesh: 0
+  _col: {fileID: 6651559853100756073}
+  _dataMesh: {fileID: 11400000, guid: 2594a105f1adee84490f5939692309ac, type: 2}
 --- !u!114 &5013703305012363483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,8 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 015276adfe6146ea92f175bca3c57df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tuileBase: {fileID: 0}
-  col: {fileID: 6651559853100756073}
+  _tuileBase: {fileID: 0}
 --- !u!114 &1526656204194774990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +147,7 @@ MonoBehaviour:
   _materialAInstencier: {fileID: 2100000, guid: 03b1d1c16996e534583cbef3da7fb018,
     type: 2}
   _reinit: 0
---- !u!114 &8060094190446049461
+--- !u!114 &6652692515009518705
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,9 +156,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3611774392198115742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9318cd3592fa47c3abd6b052a91276a0, type: 3}
+  m_Script: {fileID: 11500000, guid: dcab6922546542d897ff244270c15c2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _meshRenderer: {fileID: 7657697131134058313}
-  _teinte: {r: 1, g: 1, b: 1, a: 0.8039216}
+  _teinte: {r: 1, g: 1, b: 1, a: 0}
   nomCouleurShader: BaseColor
+  _teinteHover: {r: 1, g: 1, b: 1, a: 0.6901961}

@@ -20,6 +20,8 @@ namespace Graphics
 
         private void Update()
         {
+            if(Application.isPlaying && !ReinitMesh) return;
+
             if (_meshFilter)
             {   
                 if (!_meshFilter.sharedMesh)
@@ -41,8 +43,16 @@ namespace Graphics
         private void AssignerMesh()
         {
             _meshFilter.sharedMesh = MeshAMesher;
-            _meshFilter.sharedMesh.RecalculateNormals();
-            _meshFilter.sharedMesh.RecalculateBounds();
+            if(_meshFilter.sharedMesh)
+            {
+                _meshFilter.sharedMesh.RecalculateNormals();
+                _meshFilter.sharedMesh.RecalculateBounds();
+            }
+            else
+            {
+                Debug.LogError("le mesh filter de " + name + " ne contient pas de mesh alors qu'on vient de lui" +
+                               " en assigner le mesh : " + MeshAMesher.name);
+            }
         }
         
         /// <summary>

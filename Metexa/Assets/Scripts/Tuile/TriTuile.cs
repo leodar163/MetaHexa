@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Graphics;
+using Interactions;
 using PathFinding;
 using Tuile.Graphics;
 using UnityEngine;
@@ -8,24 +10,22 @@ using UnityEngine.EventSystems;
 
 namespace Tuile
 {
-    [RequireComponent(typeof(MeshCollider), typeof(MesheurTrituile))]
+    [RequireComponent(typeof(MesheurTrituile))]
     public class TriTuile : MonoBehaviour
     {
-        [SerializeField] private Tuile tuileBase;
+        [SerializeField] private Tuile _tuileBase;
         [Space]
-        [SerializeField] private MeshCollider col;
+        
         public Noeud noeud;
         public static LayerMask maskTuile;
 
         private float _hauteur;
+        
 
         private void OnValidate()
         {
-            if (!col && TryGetComponent(out col))
-            {
-                col.sharedMesh = MeshsTuiles.TriTuile;
-                if (col.sharedMesh) col.sharedMesh.RecalculateNormals();
-            }   
+
+            
             FixerHauteur();   
         }
 
