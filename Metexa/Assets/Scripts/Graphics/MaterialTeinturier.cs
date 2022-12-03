@@ -7,15 +7,29 @@ namespace Graphics
     public class MaterialTeinturier : MonoBehaviour
     {
         [SerializeField] private MeshRenderer _meshRenderer;
-        [SerializeField] private Color _teinte = Color.white;
         [SerializeField] private string nomCouleurShader = "BaseColor";
 
-        public Color teinte => _teinte;
+        protected bool _peutEtreTeint = true; 
         
+        [SerializeField] private Color _teinte = Color.white;
+
+        public Color teinte
+        {
+            get => _teinte;
+            set
+            {
+                _teinte = value;
+                if (_peutEtreTeint)
+                {
+                    TeindreMaterial();
+                }
+            }
+        }
+
         private void OnValidate()
         {
             if (!_meshRenderer) TryGetComponent(out _meshRenderer);
-            if (_meshRenderer) TeindreMaterial(_teinte);
+            if (_meshRenderer) TeindreMaterial();
         }
 
         public void TeindreMaterial(Color couleurTeinture)
@@ -24,9 +38,15 @@ namespace Graphics
             {
                 return;
             }
-            _teinte = couleurTeinture;
+           
             if(nomCouleurShader.Length > 0)
-                _meshRenderer.sharedMaterial.SetColor('_'+nomCouleurShader, _teinte);
+                _meshRenderer.sharedMaterial.SetColor('_' + nomCouleurShader, couleurTeinture);
+        }
+
+        protected void TeindreMaterial()
+        {
+            if(!_peutEtreTeint) return;
+            TeindreMaterial(_teinte);
         }
     }
 }

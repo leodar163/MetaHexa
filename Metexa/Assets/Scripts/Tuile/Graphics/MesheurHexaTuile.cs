@@ -9,12 +9,11 @@ namespace Tuile.Graphics
     public class MesheurHexaTuile : Mesheur
     {
         [SerializeField] private Tuile _tuile;
-        [SerializeField] private int indexTuile;
+        [SerializeField] private int _indexData;
 
-        [SerializeField]
-        private TuileMeshData _dataMesh; 
+        [SerializeField] private TuileMeshData _dataMesh; 
         [CanBeNull]
-        protected override Mesh MeshAMesher => !_dataMesh ? new Mesh() : _dataMesh.RecupMeshTuileHexa(indexTuile);
+        protected override Mesh MeshAMesher => !_dataMesh ? new Mesh() : _dataMesh.RecupMeshTuileHexa(_indexData);
 
         protected override void QuandMAJ()
         {
@@ -35,6 +34,8 @@ namespace Tuile.Graphics
                 if (i < _tuile.MappeHauteur.Length && _tuile.TriTuiles[i] is not null)
                     _tuile.TriTuiles[i].AppliquerHauteur(_tuile.MappeHauteur[i]);
             }
+            
+            if(_dataMesh) _dataMesh.SauvegarderMeshTuileHexa(_meshFilter.sharedMesh, _indexData);
         }
     }
 }

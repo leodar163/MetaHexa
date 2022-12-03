@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 namespace Tuile
 {
     [RequireComponent(typeof(MesheurTrituile))]
-    public class TriTuile : MonoBehaviour
+    public class TriTuile : MonoBehaviour, IClicable, ISelectionable
     {
         [SerializeField] private Tuile _tuileBase;
         [Space]
@@ -69,6 +69,26 @@ namespace Tuile
                     z = transform.position.z
                 };
             }
+        }
+
+        public void QuandCliqueGauche()
+        {
+            print("Clique gauche sur " + name);
+        }
+
+        public void QuandCliqueDroit()
+        {
+            print("Clique droit sur " + name);
+        }
+
+        public void QuandSelectionned()
+        {
+            print(name + " sélectionné");
+        }
+
+        public void QuandDeselectionned()
+        {
+            print(name + " désélectionné");
         }
     }
 }

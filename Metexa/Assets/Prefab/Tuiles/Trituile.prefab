@@ -51,7 +51,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: f2cb3d23aa45aaa469a2a6f74f865514, type: 2}
 --- !u!33 &4947455254267938622
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -160,6 +160,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meshRenderer: {fileID: 7657697131134058313}
-  _teinte: {r: 1, g: 1, b: 1, a: 0}
   nomCouleurShader: BaseColor
+  _teinte: {r: 1, g: 1, b: 1, a: 0}
   _teinteHover: {r: 1, g: 1, b: 1, a: 0.6901961}

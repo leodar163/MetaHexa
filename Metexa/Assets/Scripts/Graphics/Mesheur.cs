@@ -26,8 +26,6 @@ namespace Graphics
             {   
                 if (!_meshFilter.sharedMesh)
                 {
-                    print(name + " a assigné un mesh de TriTuile");
-                    
                     AssignerMesh();
                 }
                 if (ReinitMesh)
@@ -47,6 +45,8 @@ namespace Graphics
             {
                 _meshFilter.sharedMesh.RecalculateNormals();
                 _meshFilter.sharedMesh.RecalculateBounds();
+                
+                print(name + " a assigné un mesh " + MeshAMesher.name);
             }
             else
             {

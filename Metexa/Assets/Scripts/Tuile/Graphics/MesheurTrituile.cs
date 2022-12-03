@@ -12,12 +12,12 @@ namespace Tuile.Graphics
         [SerializeField]
         private TuileMeshData _dataMesh;
 
-        protected override Mesh MeshAMesher => _dataMesh? _dataMesh.meshTrituile : new Mesh();
+        protected override Mesh MeshAMesher => _dataMesh? _dataMesh.MeshDataTrituile : new Mesh();
 
         protected override void QuandAssigne()
         {
             base.QuandAssigne();
-            if (!_col && TryGetComponent(out _col))
+            if (!_col) TryGetComponent(out _col);
             {
                 _col.sharedMesh = MeshAMesher;
                 if (_col.sharedMesh) _col.sharedMesh.RecalculateNormals();

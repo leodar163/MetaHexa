@@ -125,7 +125,7 @@ MonoBehaviour:
   _meshFilter: {fileID: 2655130661991080423}
   ReinitMesh: 0
   _tuile: {fileID: 2655130661991080421}
-  indexTuile: 0
+  _indexData: 0
   _dataMesh: {fileID: 11400000, guid: 2594a105f1adee84490f5939692309ac, type: 2}
 --- !u!114 &2655130661991080421
 MonoBehaviour:
