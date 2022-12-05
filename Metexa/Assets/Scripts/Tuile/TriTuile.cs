@@ -21,10 +21,17 @@ namespace Tuile
 
         private float _hauteur;
         
+        [Header("graphique")]
+        [SerializeField] private MaterialTeinturier _teinturier;
 
+        [SerializeField] private Color _couleurDefaut;
+        [SerializeField] private Color _couleurSelectionned;
+        [SerializeField] private Color _couleurChemin;
+        [SerializeField] private Color _couleurFinChemin;
+        
         private void OnValidate()
         {
-
+            if (!_teinturier) TryGetComponent(out _teinturier);
             
             FixerHauteur();   
         }
@@ -50,8 +57,11 @@ namespace Tuile
             
         }
 
+        public void AppliquerCouleur(Color couleur)
+        {
+            _teinturier.teinteBase = couleur;
+        }
         
-
         public void AppliquerHauteur(float hauteur)
         {
             _hauteur = hauteur;
@@ -71,24 +81,47 @@ namespace Tuile
             }
         }
 
+        private static TriTuile s_triTuileSelectionned;
+        
         public void QuandCliqueGauche()
         {
-            print("Clique gauche sur " + name);
+           
         }
 
         public void QuandCliqueDroit()
         {
-            print("Clique droit sur " + name);
+            if (s_triTuileSelectionned)
+            {
+                PathFinder.TrouverChemin(s_triTuileSelectionned,this, ColorerChemin);
+            }
         }
 
+        private void ColorerChemin(Stack<Noeud> chemin)
+        {
+            while (chemin.Count > 1)
+            {
+                noeud = chemin.Peek();
+                noeud.tuile.AppliquerCouleur(noeud.tuile._couleurChemin);
+            }
+
+            noeud = chemin.Peek();
+            noeud.tuile.AppliquerCouleur(noeud.tuile._couleurFinChemin);
+        }
+        
         public void QuandSelectionned()
         {
-            print(name + " sélectionné");
+            if (s_triTuileSelectionned != null && s_triTuileSelectionned != this)
+            {
+                s_triTuileSelectionned.QuandDeselectionned();
+                AppliquerCouleur(_couleurSelectionned);
+            }
+            s_triTuileSelectionned = this;
         }
 
         public void QuandDeselectionned()
         {
-            print(name + " désélectionné");
+            s_triTuileSelectionned = null;
+            AppliquerCouleur(_couleurDefaut);
         }
     }
 }

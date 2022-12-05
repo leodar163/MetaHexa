@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 7657697131134058313}
   - component: {fileID: 8199989606398095402}
   - component: {fileID: 5013703305012363483}
-  - component: {fileID: 1526656204194774990}
-  - component: {fileID: 6652692515009518705}
+  - component: {fileID: 912019617988179783}
   m_Layer: 6
   m_Name: Trituile
   m_TagString: Untagged
@@ -59,7 +58,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3611774392198115742}
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 4300000, guid: f2cb3d23aa45aaa469a2a6f74f865514, type: 2}
 --- !u!23 &7657697131134058313
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -131,23 +130,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tuileBase: {fileID: 0}
---- !u!114 &1526656204194774990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3611774392198115742}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b697e6333064541897aebdd06b5b60f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _meshRenderer: {fileID: 7657697131134058313}
-  _materialAInstencier: {fileID: 2100000, guid: 03b1d1c16996e534583cbef3da7fb018,
-    type: 2}
-  _reinit: 0
---- !u!114 &6652692515009518705
+  _teinturier: {fileID: 912019617988179783}
+  _couleurDefaut: {r: 1, g: 1, b: 1, a: 1}
+  _couleurSelectionned: {r: 0.14855818, g: 0.735849, b: 0.14855818, a: 1}
+  _couleurChemin: {r: 0.28679246, g: 0.28679246, b: 0.7169812, a: 1}
+  _couleurFinChemin: {r: 0.7735849, g: 0.1707725, b: 0.1707725, a: 1}
+--- !u!114 &912019617988179783
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -160,6 +148,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _meshRenderer: {fileID: 7657697131134058313}
-  nomCouleurShader: BaseColor
-  _teinte: {r: 1, g: 1, b: 1, a: 0}
-  _teinteHover: {r: 1, g: 1, b: 1, a: 0.6901961}
+  _materialAInstencier: {fileID: 2100000, guid: 03b1d1c16996e534583cbef3da7fb018,
+    type: 2}
+  _reinit: 0
+  _nomCouleurShader: BaseColor
+  _couleur: {r: 1, g: 1, b: 1, a: 1}
+  _ecraserAlpha: 1
+  teinteBaseBase: {r: 1, g: 1, b: 1, a: 0}
+  _teinteHover: {r: 1, g: 1, b: 1, a: 0.69411767}
+  quandHovered:
+    m_PersistentCalls:
+      m_Calls: []
+  quandHoverCommence:
+    m_PersistentCalls:
+      m_Calls: []
+  quandHoverFinit:
+    m_PersistentCalls:
+      m_Calls: []

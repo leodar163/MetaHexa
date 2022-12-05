@@ -1,4 +1,6 @@
-﻿namespace Interactions
+﻿
+
+namespace Interactions
 {
     public interface ISelectionable
     {

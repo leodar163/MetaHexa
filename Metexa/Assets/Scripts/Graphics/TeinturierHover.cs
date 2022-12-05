@@ -1,12 +1,19 @@
-﻿using Interactions;
+﻿using Graphics;
+using Interactions;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Graphics
 {
-    public class MaterialTeinturierHover : MaterialTeinturier, IHoverable
+    public class TeinturierHover : MaterialTeinturier, IHoverable
     {
         [SerializeField] private Color _teinteHover = Color.white;
 
+        [Header("Events")] 
+        public UnityEvent quandHovered = new UnityEvent();
+        public UnityEvent quandHoverCommence = new UnityEvent();
+        public UnityEvent quandHoverFinit = new UnityEvent();
+        
         public Color teinteHover
         {
             get => _teinteHover;
@@ -26,6 +33,8 @@ namespace Graphics
             _peutEtreTeint = false;
             _estHovered = true;
             TeindreMaterial(_teinteHover);
+            
+            quandHoverCommence.Invoke();
         }
 
         public void QuandHoverFini()
@@ -33,11 +42,12 @@ namespace Graphics
             _peutEtreTeint = true;
             _estHovered = false;
             TeindreMaterial();
+            quandHoverFinit.Invoke();
         }
 
         public void QuandHoverReste()
         {
-            
+            quandHovered.Invoke();
         }
     }
 }

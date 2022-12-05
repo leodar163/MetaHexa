@@ -1,24 +1,20 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Graphics
 {
     [RequireComponent(typeof(MeshRenderer))]
-    public class MaterialTeinturier : MonoBehaviour
+    public class MaterialTeinturier : MaterialInstancieur
     {
-        [SerializeField] private MeshRenderer _meshRenderer;
-        [SerializeField] private string nomCouleurShader = "BaseColor";
+        protected bool _peutEtreTeint = true;
+        [SerializeField] private bool _ecraserAlpha = true;
+        [SerializeField] private Color teinteBaseBase = Color.white;
 
-        protected bool _peutEtreTeint = true; 
-        
-        [SerializeField] private Color _teinte = Color.white;
-
-        public Color teinte
+        public Color teinteBase
         {
-            get => _teinte;
+            get => teinteBaseBase;
             set
             {
-                _teinte = value;
+                teinteBaseBase = value;
                 if (_peutEtreTeint)
                 {
                     TeindreMaterial();
@@ -26,27 +22,33 @@ namespace Graphics
             }
         }
 
-        private void OnValidate()
+        protected override void OnValidate()
         {
-            if (!_meshRenderer) TryGetComponent(out _meshRenderer);
+            base.OnValidate();
             if (_meshRenderer) TeindreMaterial();
         }
 
-        public void TeindreMaterial(Color couleurTeinture)
+        protected void TeindreMaterial(Color couleurTeinture)
         {
             if (!_meshRenderer.sharedMaterial)
             {
                 return;
             }
-           
-            if(nomCouleurShader.Length > 0)
-                _meshRenderer.sharedMaterial.SetColor('_' + nomCouleurShader, couleurTeinture);
+
+            if (_nomCouleurShader.Length > 0)
+            {
+                Color teinte = couleur * couleurTeinture;
+                if (_ecraserAlpha) teinte.a = couleurTeinture.a;
+                _meshRenderer.sharedMaterial.SetColor('_' + _nomCouleurShader, teinte);
+            }
         }
 
+        
+        
         protected void TeindreMaterial()
         {
             if(!_peutEtreTeint) return;
-            TeindreMaterial(_teinte);
+            TeindreMaterial(teinteBaseBase);
         }
     }
 }
