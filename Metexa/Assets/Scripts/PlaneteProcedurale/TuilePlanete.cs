@@ -10,8 +10,8 @@ namespace MetaHexa.PlaneteProcedurale
         private Vector3 _ancreLocale;
         private float _hauteur;
 
-        public Vector3 AncreAbsolue => _ancreLocale + transform.position;
-        public Vector3 AncreLocale => _ancreLocale;
+        public Vector3 AncreAbsolue => transform.rotation * _ancreLocale + transform.position;
+        public Vector3 AncreLocale => transform.localRotation * _ancreLocale;
         public Planete planete { get; private set; }
         
         public float Hauteur
@@ -27,7 +27,7 @@ namespace MetaHexa.PlaneteProcedurale
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.green;
+            //Gizmos.color = Color.green;
             //Gizmos.DrawSphere(AncreAbsolue,0.05f);
 
             // for (int i = 0; i < _meshFilter.mesh.normals.Length; i++)
