@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Graphics;
 using UnityEngine;
 
@@ -27,6 +28,7 @@ namespace MetaHexa.PlaneteProcedurale
             }
         }
 
+        /*
         private void OnValidate()
         {
             if (_refreshMesh)
@@ -35,5 +37,47 @@ namespace MetaHexa.PlaneteProcedurale
                 _meshFilter.sharedMesh = MeshCollection.GenererSphere(_definitionSphere);
             }
         }
+
+        
+        public void GenererPlanete(int definitionSphere)
+        {
+            NettoyerPlanete();
+
+            List<Mesh> meshTuiles = MeshCollection.GenererSphereTuileExtrudables(definitionSphere);
+            
+            foreach (var mesh in meshTuiles)
+            {
+                AjouterTuiles(mesh);
+            }
+        }
+
+        private void AjouterTuiles(Mesh mesh)
+        {
+            GameObject nvlleTuile = new GameObject($"Tuile {_tuiles.Count}")
+            {
+                transform =
+                {
+                    parent = transform,
+                    localPosition = Vector3.zero
+                }
+            };
+
+            nvlleTuile.AddComponent<MeshRenderer>();
+            MeshFilter filter = nvlleTuile.AddComponent<MeshFilter>();
+            filter.sharedMesh = mesh;
+            
+            _tuiles.Add(filter);
+        }
+
+        private void NettoyerPlanete()
+        {
+            foreach (var tuile in _tuiles)
+            {
+                Destroy(tuile.gameObject);
+            }
+            
+            _tuiles.Clear();
+        }
+        */
     }
 }

@@ -20,7 +20,7 @@ namespace Graphics
             return ico;
         }
 
-        public static Mesh GenererSphere(int definition = 1)
+        public static Mesh GenererSphere(uint definition = 1, bool tailleTriangleFixe = true)
         {
             RecupSphereInfos(out Vector3[] vertices, out int[] triangles, definition);
             Mesh sphere = new Mesh
@@ -28,10 +28,21 @@ namespace Graphics
                 vertices = vertices,
                 triangles = triangles
             };
+
+            if (tailleTriangleFixe)
+            {
+                sphere = GenererMeshAgrandi( sphere, Mathf.Pow(2,definition));
+            }
             
             sphere.RecalculateNormals();
             sphere.name = "Sphere:" + definition;
             return sphere;
+        }
+
+        public static List<Mesh> GenererSphereATuilesExtrudables(uint definition = 1)
+        {
+            Mesh sphere = GenererSphere(definition);
+            return DiviserEnTuilesTriangulairesExtrudables(sphere);
         }
         
         public static void RecupIcosahedreInfos(out Vector3[] vertices, out int[] triangles)
@@ -79,13 +90,13 @@ namespace Graphics
             };
         }
 
-        public static void RecupSphereInfos(out Vector3[] vertices, out int[] triangles, int definition)
+        public static void RecupSphereInfos(out Vector3[] vertices, out int[] triangles, uint definition)
         {
             RecupIcosahedreInfos(out vertices, out triangles);
             SubdiviserSphere(ref vertices, ref triangles, definition);
         }
 
-        private static void SubdiviserSphere(ref Vector3[] vertices, ref int[] triangles, int definition)
+        private static void SubdiviserSphere(ref Vector3[] vertices, ref int[] triangles, uint definition)
         {
             var midPointCache = new Dictionary<int, int> ();
 
@@ -135,6 +146,111 @@ namespace Graphics
                 vertices = newVertices.ToArray();
                 triangles = newTriangles.ToArray();
             }
+        }
+        
+        /*
+        private static Mesh CreerMeshTrianglesExtrudables(Mesh meshAExtruder)
+        {
+            List<int> nvTriangles = new List<int>();
+            List<Vector3> nvVertices = new List<Vector3>();
+
+            for (int i = 0; i < meshAExtruder.triangles.Length; i += 3)
+            {
+                Vector3 a = meshAExtruder.vertices[meshAExtruder.triangles[i]];
+                Vector3 b = meshAExtruder.vertices[meshAExtruder.triangles[i + 1]];
+                Vector3 c = meshAExtruder.vertices[meshAExtruder.triangles[i + 2]];
+                
+                nvVertices.AddRange(new []{a, b, c, a, b, c});
+                
+                nvTriangles.AddRange(new []
+                {
+                    i, i + 1, i + 2,                    
+                    
+                    i, i + 2, i + 3,
+                    i + 2, i + 5, i,
+                    
+                    i + 1, i + 3, i + 4,
+                    i, i + 3, i + 1,
+                    
+                    i + 2, i + 4, i + 5,
+                    i + 1, i + 4, i + 2
+                });
+            }
+            
+            Mesh meshExtrudable = new Mesh()
+            {
+                vertices = nvVertices.ToArray(),
+                triangles = nvTriangles.ToArray()
+            };
+                
+            meshExtrudable.RecalculateNormals();
+            return meshExtrudable;
+        }
+        */
+
+        private static List<Mesh> DiviserEnTuilesTriangulairesExtrudables(Mesh meshAdiviser)
+        {
+            List<Mesh> tuiles = new List<Mesh>();
+
+            for (int i = 0; i < meshAdiviser.triangles.Length; i += 3)
+            {
+                Mesh nvMesh = new Mesh
+                {
+                    vertices = new[]
+                    {
+                        meshAdiviser.vertices[meshAdiviser.triangles[i]],
+                        meshAdiviser.vertices[meshAdiviser.triangles[i + 1]],
+                        meshAdiviser.vertices[meshAdiviser.triangles[i + 2]],
+                        
+                        meshAdiviser.vertices[meshAdiviser.triangles[i + 1]],
+                        meshAdiviser.vertices[meshAdiviser.triangles[i]],
+                        Vector3.zero,
+                        
+                        meshAdiviser.vertices[meshAdiviser.triangles[i + 2]],
+                        meshAdiviser.vertices[meshAdiviser.triangles[i + 1]],
+                        Vector3.zero,
+                        
+                        meshAdiviser.vertices[meshAdiviser.triangles[i]],
+                        meshAdiviser.vertices[meshAdiviser.triangles[i + 2]],
+                        Vector3.zero
+                    },
+                    triangles = new[]
+                    {
+                        0, 1, 2,
+                        3, 4, 5,
+                        6, 7, 8,
+                        9, 10, 11
+                    },
+                    name = $"tuile {i}"
+                };
+
+                nvMesh.RecalculateNormals();
+                
+                tuiles.Add(nvMesh);
+            }
+
+            return tuiles;
+        }
+
+        public static Mesh GenererMeshAgrandi(Mesh meshAAgrandir, float multiplicateur)
+        {
+            Vector3[] vertices = meshAAgrandir.vertices;
+            int[] triangles = meshAAgrandir.triangles;
+            
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                vertices[i] *= multiplicateur;
+            }
+
+            Mesh meshAgrandi = new Mesh
+            {
+                vertices = vertices,
+                triangles = triangles,
+                name = meshAAgrandir.name
+            };
+            
+            meshAgrandi.RecalculateNormals();
+            return meshAgrandi;
         }
     }
 }
