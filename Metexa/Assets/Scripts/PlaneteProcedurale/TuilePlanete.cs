@@ -9,6 +9,7 @@ namespace MetaHexa.PlaneteProcedurale
         [SerializeField] private MeshFilter _meshFilter;
         private Vector3 _ancreLocale;
         private float _hauteur;
+        private Coordonnee _coordonnees;
 
         public Vector3 AncreAbsolue => transform.rotation * _ancreLocale + transform.position;
         public Vector3 AncreLocale => transform.localRotation * _ancreLocale;
@@ -20,10 +21,12 @@ namespace MetaHexa.PlaneteProcedurale
             set
             {
                 _hauteur = value;
-                _hauteur = Mathf.Clamp(_hauteur, -planete.taille, planete.taille);
+                _hauteur = Mathf.Clamp(_hauteur, -planete.rayon, planete.rayon);
                 AppliquerHauteur(_hauteur);
             }
         }
+        
+        
 
         private void OnDrawGizmos()
         {
@@ -40,7 +43,8 @@ namespace MetaHexa.PlaneteProcedurale
         {
             _meshFilter.sharedMesh = meshTuile;
             this.planete = planete;
-            CalculerAncre();   
+            CalculerAncre();
+            _coordonnees = new Coordonnee(_ancreLocale);
         }
 
         private void CalculerAncre()
@@ -68,7 +72,7 @@ namespace MetaHexa.PlaneteProcedurale
                 _meshFilter.mesh = MeshCollection.GenererMeshAgrandi(_meshFilter.mesh, 1/_multiplicateurTaille);
                 _multiplicateurTaille = 0;
             }
-            _multiplicateurTaille += (planete.taille + hauteur) / planete.taille;
+            _multiplicateurTaille += (planete.rayon + hauteur) / planete.rayon;
             _meshFilter.mesh = MeshCollection.GenererMeshAgrandi(_meshFilter.mesh, _multiplicateurTaille);
 
             CalculerAncre();
