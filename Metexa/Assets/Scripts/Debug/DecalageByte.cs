@@ -10,7 +10,7 @@ namespace MetaHexa.Debug
         [SerializeField] private int _nbrDecalage;
         [Space] 
         [SerializeField] private TypeDecalage _typeDecalage;
-        
+
         public enum TypeDecalage
         {
             droite,
