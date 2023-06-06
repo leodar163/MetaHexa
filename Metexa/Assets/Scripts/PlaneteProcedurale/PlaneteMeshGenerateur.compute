@@ -1,0 +1,102 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel Main
+
+// Create a RenderTexture with enableRandomWrite flag and set it
+// with cs.SetTexture
+RWTexture2D<float4> Result;
+
+RWBuffer<float3> vertices;
+RWBuffer<int> triangles;
+RWBuffer<float3> normales;
+
+struct mesh
+{
+    RWBuffer<float3> vectices;
+    RWBuffer<int> triangles;
+    RWBuffer<float3> normales;
+};
+
+float3 direction(float3 const from, float3 const to)
+{
+    return normalize(to - from);
+}
+
+float3 get_center_of_triangle(float3 vertex1,float3 vertex2,float3 vertex3)
+{
+    return (vertex1 + vertex2 + vertex3) / 3;
+}
+
+void calculer_normales(mesh mesh_a_calculer)
+{
+    uint nbr_of_triangles;
+    mesh_a_calculer.triangles.GetDimensions(nbr_of_triangles);
+    
+    for (uint i = 0; i < nbr_of_triangles; i+=3)
+    {
+        float3 const center = get_center_of_triangle(mesh_a_calculer.vectices[mesh_a_calculer.triangles[i]],
+            mesh_a_calculer.vectices[mesh_a_calculer.triangles[i + 1]],
+            mesh_a_calculer.vectices[mesh_a_calculer.triangles[i + 2]]);
+        float3 const direcion = direction({0,0,0}, center);
+
+        mesh_a_calculer.normales[mesh_a_calculer.triangles[i]] = direcion;
+        mesh_a_calculer.normales[mesh_a_calculer.triangles[i + 1]] = direcion;
+        mesh_a_calculer.normales[mesh_a_calculer.triangles[i + 2]] = direcion;
+    }
+}
+
+mesh creer_icosahedre()
+{
+    float t = (1.0f + sqrt(5.0f)) / 2.0f;
+    
+    const mesh ico;
+    
+    uint i = 0;
+    ico.vectices[i++] = normalize(float3(-1, t, 0));
+    ico.vectices[i++] = normalize(float3(1, t, 0));
+    ico.vectices[i++] = normalize(float3(-1, -t, 0));
+    ico.vectices[i++] = normalize(float3(1, -t, 0));
+    ico.vectices[i++] = normalize(float3(0, -1, t));
+    ico.vectices[i++] = normalize(float3(0, 1, t));
+    ico.vectices[i++] = normalize(float3(0, -1, -t));
+    ico.vectices[i++] = normalize(float3(0, 1, -t));
+    ico.vectices[i++] = normalize(float3(t, 0, -1));
+    ico.vectices[i++] = normalize(float3(t, 0, 1));
+    ico.vectices[i++] = normalize(float3(-t, 0, -1));
+    ico.vectices[i] = normalize(float3(-t, 0, 1));
+    
+    i = 0;
+    ico.triangles[i++] = 0; ico.triangles[i++] = 10; ico.triangles[i++] = 11;
+    ico.triangles[i++] = 0; ico.triangles[i++] = 11; ico.triangles[i++] = 5;
+    ico.triangles[i++] = 0; ico.triangles[i++] = 5; ico.triangles[i++] = 1;
+    ico.triangles[i++] = 0; ico.triangles[i++] = 1; ico.triangles[i++] = 7;
+    ico.triangles[i++] = 0; ico.triangles[i++] = 7; ico.triangles[i++] = 10;
+    
+    ico.triangles[i++] = 10; ico.triangles[i++] = 7; ico.triangles[i++] = 6;
+    ico.triangles[i++] = 6; ico.triangles[i++] = 2; ico.triangles[i++] = 10;
+    ico.triangles[i++] = 11; ico.triangles[i++] = 10; ico.triangles[i++] = 2;
+    ico.triangles[i++] = 2; ico.triangles[i++] = 4; ico.triangles[i++] = 11;
+    ico.triangles[i++] = 5; ico.triangles[i++] = 11; ico.triangles[i++] = 4;
+    ico.triangles[i++] = 4; ico.triangles[i++] = 9; ico.triangles[i++] = 5;
+    ico.triangles[i++] = 1; ico.triangles[i++] = 5; ico.triangles[i++] = 9;
+    ico.triangles[i++] = 9; ico.triangles[i++] = 8; ico.triangles[i++] = 1;
+    ico.triangles[i++] = 7; ico.triangles[i++] = 1; ico.triangles[i++] = 8;
+    ico.triangles[i++] = 8; ico.triangles[i++] = 6; ico.triangles[i++] = 7;
+
+    ico.triangles[i++] = 3; ico.triangles[i++] = 6; ico.triangles[i++] = 8;
+    ico.triangles[i++] = 3; ico.triangles[i++] = 2; ico.triangles[i++] = 6;
+    ico.triangles[i++] = 3; ico.triangles[i++] = 4; ico.triangles[i++] = 2;
+    ico.triangles[i++] = 3; ico.triangles[i++] = 9; ico.triangles[i++] = 4;
+    ico.triangles[i++] = 3; ico.triangles[i++] = 8; ico.triangles[i++] = 9;
+
+    calculer_normales(ico);
+    
+    return ico;
+}
+
+mesh return_mesh;
+
+[numthreads(1,0,0)]
+void Main (uint3 id : SV_DispatchThreadID)
+{
+    return_mesh = creer_icosahedre();
+}

@@ -7,7 +7,7 @@ Mesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Trituile
-  serializedVersion: 10
+  serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
     firstByte: 0
@@ -45,10 +45,6 @@ Mesh:
       format: 0
       dimension: 3
     - stream: 0
-      offset: 12
-      format: 0
-      dimension: 3
-    - stream: 0
       offset: 0
       format: 0
       dimension: 0
@@ -96,8 +92,12 @@ Mesh:
       offset: 0
       format: 0
       dimension: 0
-    m_DataSize: 432
-    _typelessdata: 3acd133f6f12833a00000000000000000000803f0000000038cd93be6f12833a000000bf000000000000803f000000003bcd93be6f12833affffff3e000000000000803f000000003acd133f6f1283ba0000000000000000000080bf000000003bcd93be6f1283baffffff3e00000000000080bf0000000038cd93be6f1283ba000000bf00000000000080bf000000003acd133f6f12833a00000000feffff3e00000000d8b35d3f3acd133f6f1283ba00000000feffff3e00000000d8b35d3f3bcd93be6f12833affffff3efeffff3e00000000d8b35d3f3bcd93be6f1283baffffff3efeffff3e00000000d8b35d3f3acd133f6f12833a000000000000003f00000000d6b35dbf3acd133f6f1283ba000000000000003f00000000d6b35dbf38cd93be6f12833a000000bf0000003f00000000d6b35dbf38cd93be6f1283ba000000bf0000003f00000000d6b35dbf38cd93be6f12833a000000bf000080bf00000000ffffbfb338cd93be6f1283ba000000bf000080bf00000000ffffbfb33bcd93be6f12833affffff3e000080bf00000000ffffbfb33bcd93be6f1283baffffff3e000080bf00000000ffffbfb3
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 216
+    _typelessdata: 3acd133f6f12833a0000000038cd93be6f12833a000000bf3bcd93be6f12833affffff3e3acd133f6f1283ba000000003bcd93be6f1283baffffff3e38cd93be6f1283ba000000bf3acd133f6f12833a000000003acd133f6f1283ba000000003bcd93be6f12833affffff3e3bcd93be6f1283baffffff3e3acd133f6f12833a000000003acd133f6f1283ba0000000038cd93be6f12833a000000bf38cd93be6f1283ba000000bf38cd93be6f12833a000000bf38cd93be6f1283ba000000bf3bcd93be6f12833affffff3e3bcd93be6f1283baffffff3e
   m_CompressedMesh:
     m_Vertices:
       m_NumItems: 0
@@ -154,6 +154,7 @@ Mesh:
     m_Center: {x: 0.14433755, y: 0, z: -0.000000014901161}
     m_Extent: {x: 0.43301272, y: 0.001, z: 0.5}
   m_MeshUsageFlags: 0
+  m_CookingOptions: 30
   m_BakedConvexCollisionMesh: 
   m_BakedTriangleCollisionMesh: 
   m_MeshMetrics[0]: 1
